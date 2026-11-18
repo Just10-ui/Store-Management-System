@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "id": "c48ee6bb-86de-43d1-9a28-fd85b76a7966",
+            "storeName": "Justin Store",
+            "email": "Justin@gmail.com",
+            "password": "password"
+        },
+        {
+            "id": "6ca8e944-ecf1-4898-bd3f-74f5b6336a61",
+            "storeName": "Justin Store",
+            "email": "Justin1@gmail.com",
+            "password": "password"
+        }
+    ]
+}
