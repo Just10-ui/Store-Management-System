@@ -2,6 +2,7 @@ const { readFile, writeFile } = require("fs/promises");
 const { dirname, join } = require("path");
 const { generateId } = require("../utils/generateId");
 const { isEmailTaken } = require("../validators/userValidators");
+const { passwordValidation } = require("../validators/passwordValidation");
 const JSON_HEADER = { 'Content-Type': 'application/json' };
 
 const signup = async (req, res) => {
@@ -23,6 +24,8 @@ const signup = async (req, res) => {
                 email: email,
                 password: password
             };
+            const validatePassword = passwordValidation(newUser.password);
+
             const newStore = {
                 storeId: generateId(),
                 userId: newUser.id,
@@ -41,7 +44,17 @@ const signup = async (req, res) => {
                 return res.end(JSON.stringify({
                     error: 'Email is already taken'
                 }))
-            }
+            };
+
+            if (!validatePassword.isValid) {
+                res.writeHead(400, JSON_HEADER);
+
+                return res.end(JSON.stringify({
+                    error: true,
+                    field: 'Password',
+                    message: validatePassword.error
+                }));
+            };
 
             parsedAllUsers.users.push(newUser);
 
