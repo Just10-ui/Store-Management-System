@@ -1,46 +1,43 @@
-function minLength(password) {
-    return password.length < 8
-};
-
-function hasUpperLowerCase(password) {
-    return !/[a-z]/.test(password) || !/[A-Z]/.test(password);
-};
-
-function hasNumbers(password) {
-    return !/\d/.test(password);
-};
-
-function hasSpecialSymbol(password) {
-    return !/[^a-zA-Z0-9]/.test(password);
-};
-
 function passwordValidation(password) {
-    const errorMessage = [];
+    const error = [];
 
+    // Checks the password data type
     if (typeof password !== 'string') {
         return {
-            error: true,
-            field: 'Password',
+            isValid: false,
             message: 'Password must be a string'
         };
     }
-    
-    if (minLength(password)) errorMessage.push('Password must contain at least 8 characters');
-    if (hasUpperLowerCase(password)) errorMessage.push('Password must contain lowercase and uppercase');
-    if (hasNumbers(password)) errorMessage.push('Password must contain a number');
-    if (hasSpecialSymbol(password)) errorMessage.push('Password must contain a special symbol');
 
-    if (errorMessage.length > 0) {
-        return {
-            error: true,
-            field: 'Password',
-            message: errorMessage
-        };
+    // Checks the password length
+    if (password.length < 8) {
+        error.push('Password must contain at least 8 characters');
     }
 
-    return null;
+    // Checks for lowercase
+    if (!/[a-z]/.test(password)) {
+        error.push('Password must have lowercase letter');
+    }
+
+    // Checks for uppercase
+    if (!/[A-Z]/.test(password)) {
+        error.push('Password must have uppercase letter');
+    }
+
+    // Check for number
+    if (!/\d/.test(password)) {
+        error.push('Password must contain number');
+    }
+
+    // Check for special symbol
+    if (!/[^a-zA-Z0-9\s]/) {
+        error.push('Password must contain special symbol');
+    }
+
+    return {
+        isValid: error.length === 0,
+        error
+    }
 };
 
 module.exports = { passwordValidation };
-
-// polish the password validator
