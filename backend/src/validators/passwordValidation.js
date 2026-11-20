@@ -5,7 +5,7 @@ function passwordValidation(password) {
     if (typeof password !== 'string') {
         return {
             isValid: false,
-            message: 'Password must be a string'
+            error: 'Password must be a string'
         };
     }
 
@@ -30,7 +30,7 @@ function passwordValidation(password) {
     }
 
     // Check for special symbol
-    if (!/[^a-zA-Z0-9\s]/) {
+    if (!/[^a-zA-Z0-9\s]/.test(password)) {
         error.push('Password must contain special symbol');
     }
 
